@@ -10,4 +10,9 @@
             <class name="com.infotecs.internship.model.AddressEntryTest"/>
         </classes>
     </test>
+    <test name="ValidationTests">
+        <classes>
+            <class name="com.infotecs.internship.validation.IpV4ValidatorTest"/>
+        </classes>
+    </test>
 </suite>
