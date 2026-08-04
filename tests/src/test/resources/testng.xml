@@ -21,4 +21,9 @@
             <class name="com.infotecs.internship.json.AddressJsonWriterTest"/>
         </classes>
     </test>
+    <test name="TransportTests">
+        <classes>
+            <class name="com.infotecs.internship.transport.SftpFileTransportTest"/>
+        </classes>
+    </test>
 </suite>
