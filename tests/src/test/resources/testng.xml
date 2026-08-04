@@ -5,4 +5,9 @@
             <class name="com.infotecs.internship.tests.SmokeTest"/>
         </classes>
     </test>
+    <test name="ModelTests">
+        <classes>
+            <class name="com.infotecs.internship.model.AddressEntryTest"/>
+        </classes>
+    </test>
 </suite>
