@@ -15,4 +15,10 @@
             <class name="com.infotecs.internship.validation.IpV4ValidatorTest"/>
         </classes>
     </test>
+    <test name="JsonTests">
+        <classes>
+            <class name="com.infotecs.internship.json.AddressJsonParserTest"/>
+            <class name="com.infotecs.internship.json.AddressJsonWriterTest"/>
+        </classes>
+    </test>
 </suite>
