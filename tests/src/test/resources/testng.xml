@@ -31,4 +31,9 @@
             <class name="com.infotecs.internship.storage.AddressBookTest"/>
         </classes>
     </test>
+    <test name="UITests">
+        <classes>
+            <class name="com.infotecs.internship.ui.ConsoleMenuTest"/>
+        </classes>
+    </test>
 </suite>
