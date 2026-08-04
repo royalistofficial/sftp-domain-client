@@ -26,4 +26,9 @@
             <class name="com.infotecs.internship.transport.SftpFileTransportTest"/>
         </classes>
     </test>
+    <test name="StorageTests">
+        <classes>
+            <class name="com.infotecs.internship.storage.AddressBookTest"/>
+        </classes>
+    </test>
 </suite>
