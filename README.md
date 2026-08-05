@@ -21,7 +21,7 @@
 
 - Java SE 8
 - Maven 3.6+
-- Из внешних библиотек используются только [JSch](http://www.jcraft.com/jsch/) (SFTP) и [TestNG](https://testng.org/) (тесты) - согласно условиям задания.
+- Из внешних библиотек используются только [JSch](http://www.jcraft.com/jsch/) (SFTP) и [TestNG](https://testng.org/) (тесты).
 
 ## Структура проекта
 
@@ -103,6 +103,11 @@ java -jar client/target/sftp-domain-client.jar <host> <port> <username> <passwor
 ```
 java -jar client/target/sftp-domain-client.jar 127.0.0.1 22 testuser testpass /home/testuser/addresses.json
 ```
+
+Клиент проверяет отпечаток сервера по файлу `~/.ssh/known_hosts`
+(`StrictHostKeyChecking=yes`). Если сервер ещё не был добавлен в
+`known_hosts`, подключение будет отклонено с сообщением об
+ошибке.
 
 ## Запуск тестов
 
