@@ -128,3 +128,89 @@ mvn javadoc:javadoc
 ```
 
 Результат: `target/site/apidocs/index.html`.
+
+## Локальный SFTP-сервер для тестирования
+
+Для ручной проверки клиента отдельный SFTP-демон ставить не нужно —
+SFTP работает поверх обычного SSH, встроенного в Linux (OpenSSH).
+
+### 1. Установить и запустить OpenSSH-сервер
+
+```bash
+sudo apt update
+sudo apt install openssh-server -y
+sudo systemctl enable --now ssh
+sudo systemctl status ssh
+```
+
+### 2. Создать тестового пользователя и стартовый файл адресов
+
+```bash
+sudo useradd -m testuser
+sudo passwd testuser
+```
+
+
+### 3. Убедиться, что вход по паролю разрешён
+
+```bash
+sudo grep -i passwordauthentication /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*.conf 2>/dev/null
+```
+
+Если найдёте активную (не закомментированную) строку
+`PasswordAuthentication no` — измените на `yes` и перезапустите сервис:
+
+```bash
+sudo systemctl restart ssh
+```
+
+### 4. Добавить отпечаток сервера в known_hosts
+
+Клиент строго проверяет host key (`StrictHostKeyChecking=yes`), поэтому
+перед первым запуском нужно явно доверить серверу. Проще всего —
+один раз подключиться обычным `ssh` и подтвердить отпечаток:
+
+```bash
+ssh testuser@127.0.0.1
+```
+
+```
+The authenticity of host '127.0.0.1 (127.0.0.1)' can't be established.
+ED25519 key fingerprint is SHA256:xxxxxxxx...
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+```
+
+Введите `yes`, авторизуйтесь паролем, затем `exit`. Отпечаток
+запишется в `~/.ssh/known_hosts`, и Java-клиент сможет подключаться
+без ошибок.
+
+Альтернатива без интерактивного ввода:
+
+```bash
+ssh-keyscan -p 22 127.0.0.1 >> ~/.ssh/known_hosts
+```
+
+Для порядка можно сверить добавленный отпечаток с реальным ключом
+сервера:
+
+```bash
+ssh-keygen -lf ~/.ssh/known_hosts -F 127.0.0.1
+for key in /etc/ssh/ssh_host_*_key.pub; do sudo ssh-keygen -lf "$key"; done
+```
+Один из отпечатков во втором выводе должен совпасть с первым.
+
+### 5. Проверить связку логин/пароль до запуска Java-клиента
+
+```bash
+sftp -P 22 testuser@127.0.0.1
+```
+
+Если подключение проходит с первого раза — переходите к запуску
+клиента. Если просит пароль повторно ("Permission denied") — пароль
+неверный, повторите шаг 2 (`sudo passwd testuser`).
+
+### 6. Запустить клиент
+
+```bash
+java -jar client/target/sftp-domain-client.jar 127.0.0.1 22 testuser <ваш_пароль> /home/testuser/addresses.json
+```
