@@ -29,11 +29,17 @@
     <test name="StorageTests">
         <classes>
             <class name="com.infotecs.internship.storage.AddressBookTest"/>
+            <class name="com.infotecs.internship.storage.AddressFileServiceTest"/>
         </classes>
     </test>
-    <test name="UITests">
+    <test name="UiTests">
         <classes>
             <class name="com.infotecs.internship.ui.ConsoleMenuTest"/>
+        </classes>
+    </test>
+    <test name="CliTests">
+        <classes>
+            <class name="com.infotecs.internship.cli.ArgsParserTest"/>
         </classes>
     </test>
 </suite>
